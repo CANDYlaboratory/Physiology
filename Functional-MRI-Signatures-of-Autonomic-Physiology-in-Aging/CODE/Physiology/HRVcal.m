@@ -1,11 +1,11 @@
 function [hr, rmssd] = HRVcal(cardtrigger, Fs, Nfrs, TR)
-% function [hr, rmssd] = HRVcal(cardtrigger,Fa\s, TR)
+% function [hr, rmssd] = HRVcal(cardtrigger,Fs, Nfrs, TR)
 % Calculate the averaged heart rate and root mean square of successive differences of the R-R intervals 
 % Input -- cardtrigger:  cardiac peak events indices
 %       -- Fs: frequency of the cardiac signal
 %       -- Nfrs: # of MR time frames 
 %       -- TR: MR repetition time 
-% Output -- hr: averged heart rate 
+% Output -- hr: average heart rate 
 %        -- rmssd: root mean square of successive differences of the R-R intervals
 
 hbi = diff(cardtrigger/Fs);
