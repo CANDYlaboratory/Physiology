@@ -16,17 +16,15 @@ sex <- subjects$sex
 hbi_lags <-result$hbi.min.loc ;
 hbi_min <-abs(result$hbi.min.pk)
 rv_lags <-result$rv.min.loc
-Brain_volume = result$BV 
-Ventricular_volume = result$Ventricular.volume
-Mean_cortical_thickness = result$Total.thickness
-Cerebral_WMV = result$Cerebral.WM
-Cortical_GM = result$Cortical.GM
-Mean_cortical_ATT = result$ATT.vert
-Mean_cortical_CBF = result$CBF.vert
+Brain_volume <-result$BV 
+Ventricular_volume <-result$Ventricular.volume
+Mean_cortical_thickness <-result$Total.thickness
+Cerebral_WMV <-result$Cerebral.WM
+Cortical_GM <-result$Cortical.GM
+Mean_cortical_ATT <-result$ATT.vert
+Mean_cortical_CBF <-result$CBF.vert
 
 data <- data.frame(age, rv_lags, hbi_lags, hbi_min, Brain_volume, Ventricular_volume, Mean_cortical_thickness, Cerebral_WMV, Cortical_GM, Mean_cortical_ATT, Mean_cortical_CBF)
-#data_structural  <- data.frame(age,  Brain_volume, Ventricular_volume, Mean_cortical_thickness, Cerebral_WMV, Cortical_GM)
-#data_physio <- data.frame(age, rv_lags, rv_min, hbi_lags, hbi_min, Mean_cortical_ATT, Mean_cortical_CBF)
 
 
 
@@ -104,7 +102,7 @@ g <- ggplot(data_long_rescaled, aes(x = age, y = Value, color = Metric, fill = M
 print(g)
 
 
-# -------------- adding a dashed line for individual metric -----------------------------------------------#
+# -------------- create figure 5 right panel figure and add a dashed line for individual metric -----------------------------------------------#
 
 # Now, filter and add a dashed fitted line for each metric where age < 60
 models_data <- data_long_rescaled %>%
