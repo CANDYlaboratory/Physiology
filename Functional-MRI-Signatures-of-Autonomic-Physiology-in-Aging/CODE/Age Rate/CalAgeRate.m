@@ -35,7 +35,7 @@ summary_old = anova(lm_old, 'summary');
 % Organize variables into a table for the current ROI
 tbl_new = table(current_roi', age, age_category, age_interaction, 'VariableNames', {'ROI', 'Age', 'Age_Category', 'Age_Interaction'});
     
-% Fit the linear model for the current ROI
+% Fit the linear model with additional regressor for the current ROI
 lm_new = fitlm(tbl_new, 'ROI ~ Age + Age_Category + Age_Interaction'); 
 summary_new = anova(lm_new, 'summary');
 
