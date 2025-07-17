@@ -4,7 +4,7 @@ function [pval, F_stats] = CalAgeRate(data, dependVar, thres)
 %   data - A structure containing demographic and other data, must include 'age'
 %   dependVar - Dependent variable for analysis, can be vector or
 %   matrix
-%   thres - Age threshold for seperating Aging I and Aging II group
+%   thres - Age threshold for separating Aging I and Aging II group
 % Outputs:
 %   F stats - the likelihood of additional regressor giving a significantly better fit to the data
 %   pval - p-values from the statistical tests
@@ -19,31 +19,30 @@ age = data.age; % continuous variable
 age_category = age >= thres; % categorical variable, 0 for age < thres, and 1 for age >= thres (in our case age thres is 60)
 age_interaction = age .* (age >= thres); % additional regressor trying to explain difference in age rate
 
-
-
-
+sex = data.sex;  
+ed = data.ed;  
 
 current_roi = dependVar(:)';
     
 % Organize variables into a table for the current ROI
-tbl_old = table(current_roi', age, age_category,  'VariableNames', {'ROI', 'Age', 'Age_Category'});
+tbl_old = table(current_roi', age, age_category, sex, ed,  'VariableNames', {'ROI', 'Age', 'Age_Category', 'Sex', 'Education'});
     
 % Fit the linear model for the current ROI
-lm_old = fitlm(tbl_old, 'ROI ~ Age + Age_Category');
+lm_old = fitlm(tbl_old, 'ROI ~ Age + Age_Category + Sex + Education');
 summary_old = anova(lm_old, 'summary');
 
 % Organize variables into a table for the current ROI
-tbl_new = table(current_roi', age, age_category, age_interaction, 'VariableNames', {'ROI', 'Age', 'Age_Category', 'Age_Interaction'});
+tbl_new = table(current_roi', age, age_category, age_interaction, sex, ed, 'VariableNames', {'ROI', 'Age', 'Age_Category', 'Age_Interaction', 'Sex', 'Educaiton'});
     
 % Fit the linear model with additional regressor for the current ROI
-lm_new = fitlm(tbl_new, 'ROI ~ Age + Age_Category + Age_Interaction'); 
+lm_new = fitlm(tbl_new, 'ROI ~ Age + Age_Category + Age_Interaction + Sex + Education'); 
 summary_new = anova(lm_new, 'summary');
 
     
 % calculate the residue sum of squares for partial model and full model
 n = height(data);
-p2 = 4;
-p1 = 3;
+p2 = 6;
+p1 = 5;
 df1 = p2-p1;
 df2 = n-p2;
 
